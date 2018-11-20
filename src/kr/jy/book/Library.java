@@ -9,9 +9,20 @@ public class Library {
     ArrayList<Book> bookList = new ArrayList<Book>();
     LinkedList<Member> memberList = new LinkedList<Member>();
 
+    public Library() {
+        bookList.add(new Book("자바"));
+        bookList.add(new Book("자바스크립트"));
+    }
+
     //책 추가
-    public void addBook(Book book) {
-        bookList.add(book);
+    public void addBook(Book addBook) {
+        for(Book book : bookList) {
+            if(book.getName().equals(addBook.getName())) {
+                System.out.println("이미 등록된 책입니다.");
+                return;
+            }
+        }
+        bookList.add(addBook);
     }
 
     //책 삭제
@@ -20,10 +31,12 @@ public class Library {
     }
 
     //책 검색
-    public List<Book> searchBook(String bookName) {
-        List<Book> searchBookList = new ArrayList<Book>();
-
-        return searchBookList;
+    public void searchBook(String bookName) {
+        for(Book book : bookList) {
+            if(bookName.equals("") || book.getName().contains(bookName)) {
+                System.out.printf("ID:%d, 제목:%s\n", book.getBookId(), book.getName());
+            }
+        }
     }
 
     //책을 빌려주다
