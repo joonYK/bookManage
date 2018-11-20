@@ -23,6 +23,7 @@ public class Library {
             }
         }
         bookList.add(addBook);
+        System.out.println("책이 등록되었습니다.");
     }
 
     //책 삭제
