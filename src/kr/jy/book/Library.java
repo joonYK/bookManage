@@ -15,15 +15,17 @@ public class Library {
     }
 
     //책 추가
-    public void addBook(Book addBook) {
+    public boolean addBook(Book addBook) {
         for(Book book : bookList) {
             if(book.getName().equals(addBook.getName())) {
-                System.out.println("이미 등록된 책입니다.");
-                return;
+
+                return false;
             }
         }
         bookList.add(addBook);
-        System.out.println("책이 등록되었습니다.");
+
+        return true;
+
     }
 
     //책 삭제
@@ -32,12 +34,28 @@ public class Library {
     }
 
     //책 검색
-    public void searchBook(String bookName) {
-        for(Book book : bookList) {
-            if(bookName.equals("") || book.getName().contains(bookName)) {
-                System.out.printf("ID:%d, 제목:%s\n", book.getBookId(), book.getName());
+    public List<Book> searchBook(String bookName)
+    {
+        List<Book> result;
+
+        if (bookName == null || bookName.equals(""))
+        {
+            result = new ArrayList<Book> (bookList);
+        }
+        else
+        {
+            result = new ArrayList<Book> ();
+
+            for(Book book : bookList) {
+                if(book.getName().contains(bookName)) {
+                    result.add (book);
+                }
             }
         }
+
+        return result;
+
+
     }
 
     //책을 빌려주다
