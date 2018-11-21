@@ -5,7 +5,12 @@ import java.util.LinkedList;
 public class Member {
     private int memberId;   // 회원 ID
     private String name;    // 이름
-    LinkedList<Book> brrowedBookList = new LinkedList<Book>(); //빌린 책 리스트
+    private LinkedList<Book> brrowedBookList = new LinkedList<Book>(); //빌린 책 리스트
+
+    public Member(String name) {
+        this.memberId = (int)(Math.random() * 10000) + 1;
+        this.name = name;
+    }
 
     //책을 빌린다
     public void borrowBook(Book book) {

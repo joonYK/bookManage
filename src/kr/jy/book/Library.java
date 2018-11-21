@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Library {
 
-    ArrayList<Book> bookList = new ArrayList<Book>();
-    LinkedList<Member> memberList = new LinkedList<Member>();
+    private ArrayList<Book> bookList = new ArrayList<Book>();
+    private LinkedList<Member> memberList = new LinkedList<Member>();
 
     public Library() {
         bookList.add(new Book("자바"));
@@ -59,28 +59,42 @@ public class Library {
     }
 
     //회원 검색
-    public void searchMember(String bookName) {
-        for(Book book : bookList) {
-            if(bookName.equals("") || book.getName().contains(bookName)) {
-                System.out.printf("ID:%d, 제목:%s\n", book.getBookId(), book.getName());
+    public List<Member> searchMember(String memberName) {
+        List<Member> searchMemberList = new ArrayList<Member>();
+
+        if(memberName == null || memberName.equals("")) {
+            searchMemberList.addAll(memberList);
+        } else {
+            for(Member member : memberList) {
+                if(member.getName().contains(memberName)) {
+                    searchMemberList.add(member);
+                }
             }
         }
+
+        return searchMemberList;
     }
 
     //회원 등록
-    public void addMember(Member addMember) {
+    public boolean addMember(Member addMember) {
        for(Member member : memberList) {
             if(member.getMemberId() == addMember.getMemberId()) {
-                System.out.println("이미 등록된 회원 ID입니다.");
-                return;
+                return false;
             }
        }
        memberList.add(addMember);
+       return true;
     }
 
     //회원 삭제
-    public void removeMember() {
-
+    public boolean removeMember(int memberId) {
+        for(Member member : memberList) {
+            if (member.getMemberId() == memberId) {
+                bookList.remove(member);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

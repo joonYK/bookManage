@@ -12,7 +12,7 @@ public class Main {
         int actionType = 0;
 
         while(true) {
-            System.out.print("[1]:책 검색  [2]:책 등록 [3]:책 삭제 [9]: 종료\n>> ");
+            System.out.print("[1]:책 검색  [2]:책 등록  [3]:책 삭제  [4]:회원 검색  [5]:회원 등록  [6]:회원 삭제  [7]:책 대여  [8]:책 반납  [9]:종료\n>> ");
             actionType = input.nextInt();
             input.nextLine();
 
@@ -21,7 +21,7 @@ public class Main {
                 System.out.print("검색할 책 제목을 입력하세요(빈 문자열 입력 시 모든 책 검색)\n>> ");
                 List<Book> searchList = library.searchBook(input.nextLine());
 
-                if(searchList.size() == 0) {
+                if(searchList == null || searchList.size() == 0) {
                     System.out.println("검색된 책이 없습니다.");
                 } else {
                     for(Book book : searchList) {
@@ -43,10 +43,41 @@ public class Main {
             } else if(actionType == 3) {
                 System.out.print("삭제할 책 ID를 입력하세요\n>> ");
 
-                if( library.removeBook(input.nextInt()) ) {
+                if (library.removeBook(input.nextInt())) {
                     System.out.println("삭제 되었습니다.");
                 } else {
                     System.out.println("등록된 책이 아닙니다.");
+                }
+                input.nextLine();
+
+            } else if(actionType == 4) {
+                System.out.print("검색할 회원 이름을 입력하세요(빈 문자열 입력 시 모든 회원 검색)\n>> ");
+                List<Member> searchList = library.searchMember(input.nextLine());
+
+                if(searchList == null || searchList.size() == 0) {
+                    System.out.println("검색된 회원이 없습니다.");
+                } else {
+                    for(Member member : searchList) {
+                        System.out.printf("ID:%d, 이름:%s\n", member.getMemberId(), member.getName());
+                    }
+                }
+
+            } else if(actionType == 5) {
+                System.out.print("등록할 회원 이름을 입력하세요\n>> ");
+
+                if( library.addMember(new Member(input.nextLine())) ) {
+                    System.out.println("회원이 등록되었습니다.");
+                } else {
+                    System.out.println("이미 등록된 회원입니다.");
+                }
+
+            } else if(actionType == 6) {
+                System.out.print("삭제할 회원 ID를 입력하세요\n>> ");
+
+                if (library.removeMember(input.nextInt())) {
+                    System.out.println("삭제 되었습니다.");
+                } else {
+                    System.out.println("등록된 회원이 아닙니다.");
                 }
                 input.nextLine();
 
