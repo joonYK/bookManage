@@ -1,11 +1,12 @@
 package kr.jy.book;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Member {
     private int memberId;   // 회원 ID
     private String name;    // 이름
-    private LinkedList<Book> brrowedBookList = new LinkedList<Book>(); //빌린 책 리스트
+    private LinkedList<Book> borrowedBookList = new LinkedList<Book>(); //빌린 책 리스트
 
     public Member(String name) {
         this.memberId = (int)(Math.random() * 10000) + 1;
@@ -13,8 +14,9 @@ public class Member {
     }
 
     //책을 빌린다
-    public void borrowBook(Book book) {
-
+    public boolean borrowBook(Book addBook) {
+        borrowedBookList.add(addBook);
+        return true;
     }
 
     //책을 반납한다
@@ -30,11 +32,8 @@ public class Member {
         return name;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public List<Book> getBorrowedBookList() {
+        return borrowedBookList;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -53,9 +53,35 @@ public class Library {
         return searchBookList;
     }
 
-    //책을 빌려주다
-    public Book rendBook() {
-        return null;
+    //책 대여
+    public boolean rendBook(int memberId, int bookId) {
+        Member member = null;
+        Book book = null;
+
+        for(Member m : memberList) {
+            if(m.getMemberId() == memberId) {
+                member = m;
+            }
+        }
+
+        for(Book b : bookList) {
+            if(b.getBookId() == bookId) {
+                book = b;
+            }
+        }
+
+        /**
+         * 각 실패 원인을 타입별로 나눠서 반환하도록 수정
+         */
+        if(member == null || book == null || book.isRental()) {
+            return false;
+        }
+
+        member.borrowBook(book);
+        book.setRental(true);
+
+        return true;
+
     }
 
     //회원 검색
