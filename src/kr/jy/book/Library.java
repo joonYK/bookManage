@@ -12,6 +12,7 @@ public class Library {
     public Library() {
         bookList.add(new Book("자바"));
         bookList.add(new Book("자바스크립트"));
+        memberList.add(new Member("준엽"));
     }
 
     //책 추가
@@ -77,7 +78,7 @@ public class Library {
             return false;
         }
 
-        member.borrowBook(book);
+        member.addBook(book);
         book.setRental(true);
 
         return true;

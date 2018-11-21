@@ -6,7 +6,7 @@ import java.util.List;
 public class Member {
     private int memberId;   // 회원 ID
     private String name;    // 이름
-    private LinkedList<Book> borrowedBookList = new LinkedList<Book>(); //빌린 책 리스트
+    private LinkedList<Book> bookList = new LinkedList<Book>(); //빌린 책 리스트
 
     public Member(String name) {
         this.memberId = (int)(Math.random() * 10000) + 1;
@@ -14,8 +14,8 @@ public class Member {
     }
 
     //책을 빌린다
-    public boolean borrowBook(Book addBook) {
-        borrowedBookList.add(addBook);
+    public boolean addBook(Book addBook) {
+        bookList.add(addBook);
         return true;
     }
 
@@ -32,8 +32,17 @@ public class Member {
         return name;
     }
 
-    public List<Book> getBorrowedBookList() {
-        return borrowedBookList;
+    public String bookListToString() {
+        StringBuilder books = new StringBuilder();
+
+        for(Book book : bookList) {
+            if(books.length() != 0) books.append(", ");
+            books.append(book.getName()+"("+book.getBookId()+")");
+        }
+
+        return books.toString();
     }
+
+
 
 }
