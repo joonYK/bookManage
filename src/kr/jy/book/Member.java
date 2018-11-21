@@ -16,4 +16,20 @@ public class Member {
     public void returnBook(Book book) {
 
     }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

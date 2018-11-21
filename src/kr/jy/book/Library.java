@@ -15,29 +15,42 @@ public class Library {
     }
 
     //책 추가
-    public void addBook(Book addBook) {
+    public boolean addBook(Book addBook) {
         for(Book book : bookList) {
             if(book.getName().equals(addBook.getName())) {
-                System.out.println("이미 등록된 책입니다.");
-                return;
+                return false;
             }
         }
         bookList.add(addBook);
-        System.out.println("책이 등록되었습니다.");
+        return true;
     }
 
     //책 삭제
-    public void removeBook(String bookName) {
-
+    public boolean removeBook(int bookId) {
+        for(Book book : bookList) {
+            if (book.getBookId() == bookId) {
+                bookList.remove(book);
+                return true;
+            }
+        }
+        return false;
     }
 
     //책 검색
-    public void searchBook(String bookName) {
-        for(Book book : bookList) {
-            if(bookName.equals("") || book.getName().contains(bookName)) {
-                System.out.printf("ID:%d, 제목:%s\n", book.getBookId(), book.getName());
+    public List<Book> searchBook(String bookName) {
+        List<Book> searchBookList = new ArrayList<Book>();
+
+        if(bookName == null || bookName.equals("")) {
+            searchBookList.addAll(bookList);
+        } else {
+            for(Book book : bookList) {
+                if(book.getName().contains(bookName)) {
+                    searchBookList.add(book);
+                }
             }
         }
+
+        return searchBookList;
     }
 
     //책을 빌려주다
@@ -45,5 +58,29 @@ public class Library {
         return null;
     }
 
+    //회원 검색
+    public void searchMember(String bookName) {
+        for(Book book : bookList) {
+            if(bookName.equals("") || book.getName().contains(bookName)) {
+                System.out.printf("ID:%d, 제목:%s\n", book.getBookId(), book.getName());
+            }
+        }
+    }
+
+    //회원 등록
+    public void addMember(Member addMember) {
+       for(Member member : memberList) {
+            if(member.getMemberId() == addMember.getMemberId()) {
+                System.out.println("이미 등록된 회원 ID입니다.");
+                return;
+            }
+       }
+       memberList.add(addMember);
+    }
+
+    //회원 삭제
+    public void removeMember() {
+
+    }
 
 }
