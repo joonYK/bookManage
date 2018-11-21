@@ -15,13 +15,12 @@ public class Member {
 
     //책을 빌린다
     public boolean addBook(Book addBook) {
-        bookList.add(addBook);
-        return true;
+        return bookList.add(addBook);
     }
 
     //책을 반납한다
-    public void returnBook(Book book) {
-
+    public boolean removeBook(Book book) {
+        return bookList.remove(book);
     }
 
     public int getMemberId() {

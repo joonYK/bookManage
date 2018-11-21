@@ -78,12 +78,51 @@ public class Library {
             return false;
         }
 
-        member.addBook(book);
-        book.setRental(true);
+        if( member.addBook(book) ) {
+            book.setRental(true);
+        } else {
+            return false;
+        }
 
         return true;
 
     }
+
+    //책 반납
+    public boolean getBackBook(int memberId, int bookId) {
+        Member member = null;
+        Book book = null;
+
+        for(Member m : memberList) {
+            if(m.getMemberId() == memberId) {
+                member = m;
+            }
+        }
+
+        for(Book b : bookList) {
+            if(b.getBookId() == bookId) {
+                book = b;
+            }
+        }
+
+        /**
+         * 각 실패 원인을 타입별로 나눠서 반환하도록 수정
+         */
+        if(member == null || book == null || !book.isRental()) {
+            return false;
+        }
+
+        if( member.removeBook(book) ) {
+            book.setRental(false);
+        } else {
+            return false;
+        }
+
+        return true;
+
+    }
+
+
 
     //회원 검색
     public List<Member> searchMember(String memberName) {

@@ -104,6 +104,17 @@ public class Main {
             //책 반납
             } else if(actionType == 8) {
                 System.out.print("\n반납할 회원 ID를 입력하세요\n>> ");
+                memberId = input.nextInt();
+
+                System.out.print("\n반납할 책 ID를 입력하세요\n>> ");
+                bookId = input.nextInt();
+                input.nextLine();
+
+                if( library.getBackBook(memberId, bookId) ) {
+                    System.out.println("반납 완료 되었습니다.");
+                } else {
+                    System.out.println("반납할 수 없습니다.");
+                }
 
             //종료
             } else if(actionType == 9) {
