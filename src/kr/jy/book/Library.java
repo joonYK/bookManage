@@ -3,11 +3,12 @@ package kr.jy.book;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Library {
 
-    private ArrayList<Book> bookList = new ArrayList<Book>();
-    private LinkedList<Member> memberList = new LinkedList<Member>();
+    private ArrayList<Book> bookList = new ArrayList<> ();
+    private LinkedList<Member> memberList = new LinkedList<> ();
 
     public Library() {
         bookList.add(new Book("자바"));
@@ -17,38 +18,48 @@ public class Library {
 
     //책 추가
     public boolean addBook(Book addBook) {
-        for(Book book : bookList) {
+
+        if (bookList.stream ().anyMatch ((book) -> book.getName ().equals (addBook.getName ())))
+            return false;
+
+        /*for(Book book : bookList) {
             if(book.getName().equals(addBook.getName())) {
                 return false;
             }
-        }
+        }*/
         bookList.add(addBook);
         return true;
     }
 
     //책 삭제
     public boolean removeBook(int bookId) {
-        for(Book book : bookList) {
+
+        return bookList.removeIf ((book) -> book.getBookId () == bookId);
+
+        /*for(Book book : bookList) {
             if (book.getBookId() == bookId) {
                 bookList.remove(book);
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
 
     //책 검색
     public List<Book> searchBook(String bookName) {
-        List<Book> searchBookList = new ArrayList<Book>();
+        List<Book> searchBookList;
 
         if(bookName == null || bookName.equals("")) {
-            searchBookList.addAll(bookList);
+            searchBookList = new ArrayList<> (bookList);
         } else {
-            for(Book book : bookList) {
+
+            searchBookList = bookList.stream ().filter ((book) -> book.getName ().contains (bookName)).collect(Collectors.toList ());
+
+            /*for(Book book : bookList) {
                 if(book.getName().contains(bookName)) {
                     searchBookList.add(book);
                 }
-            }
+            }*/
         }
 
         return searchBookList;
