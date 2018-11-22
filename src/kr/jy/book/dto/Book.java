@@ -1,4 +1,4 @@
-package kr.jy.book;
+package kr.jy.book.dto;
 
 public class Book {
 

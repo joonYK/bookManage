@@ -1,4 +1,7 @@
-package kr.jy.book;
+package kr.jy.book.service;
+
+import kr.jy.book.dto.Book;
+import kr.jy.book.dto.Member;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -66,7 +69,7 @@ public class Library {
     }
 
     //책 대여
-    public boolean rendBook(int memberId, int bookId) {
+    public boolean lendBook(int memberId, int bookId) {
         Member member = null;
         Book book = null;
 
@@ -167,7 +170,7 @@ public class Library {
     public boolean removeMember(int memberId) {
         for(Member member : memberList) {
             if (member.getMemberId() == memberId) {
-                bookList.remove(member);
+                memberList.remove(member);
                 return true;
             }
         }

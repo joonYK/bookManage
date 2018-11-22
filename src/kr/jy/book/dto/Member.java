@@ -1,7 +1,6 @@
-package kr.jy.book;
+package kr.jy.book.dto;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class Member {
     private int memberId;   // 회원 ID
