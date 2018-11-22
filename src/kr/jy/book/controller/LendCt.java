@@ -42,7 +42,7 @@ public class LendCt {
         System.out.print("\n대여받을 회원 ID를 입력하세요\n>> ");
 
         Optional<Member> data = memberSv.searchMember(input.nextInt());
-        if(data.isPresent()) {
+        if(!data.isPresent()) {
             System.out.println("회원이 존재하지 않습니다.");
             return;
         }
@@ -63,7 +63,7 @@ public class LendCt {
         System.out.print("\n반납할 회원 ID를 입력하세요\n>> ");
 
         Optional<Member> data = memberSv.searchMember(input.nextInt());
-        if(data.isPresent()) {
+        if(!data.isPresent()) {
             System.out.println("회원이 존재하지 않습니다.");
             return;
         }
