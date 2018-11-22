@@ -3,18 +3,21 @@ package kr.jy.book;
 import kr.jy.book.controller.BookCt;
 import kr.jy.book.controller.LendCt;
 import kr.jy.book.controller.MemberCt;
-import kr.jy.book.service.Library;
+import kr.jy.book.service.BookSv;
+import kr.jy.book.service.MemberSv;
 
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Library library = new Library();
-        Scanner input = new Scanner(System.in);
         BookCt bookCt = new BookCt();
+        BookSv bookSv = new BookSv();
         MemberCt memberCt = new MemberCt();
+        MemberSv memberSv = new MemberSv();
         LendCt lendCt = new LendCt();
+
+        Scanner input = new Scanner(System.in);
 
         int actionType = 0;
 
@@ -26,15 +29,15 @@ public class Main {
 
             //도서관리
             if(actionType == 1) {
-                bookCt.manage(library);
+                bookCt.manage(bookSv);
 
             //회원 검색
             } else if(actionType == 2) {
-                memberCt.manage(library);
+                memberCt.manage(memberSv);
 
             //대여관리
             } else if(actionType == 3) {
-                lendCt.manage(library);
+                lendCt.manage(memberSv, bookSv);
 
             //종료
             } else if(actionType == 9) {
