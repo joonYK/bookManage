@@ -1,6 +1,6 @@
 # bookManage
 
-### * controller
+### * view, controller
 #### - 도서관리
 도서관
 도서관리를 한다.
