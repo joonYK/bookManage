@@ -1,12 +1,13 @@
 package kr.jy.book.service;
 
-import kr.jy.book.dto.Book;
-import kr.jy.book.dto.Member;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import kr.jy.book.dto.Book;
+import kr.jy.book.dto.Member;
+import kr.jy.book.exception.LendBookException;
 
 public class BookSv {
 
@@ -46,25 +47,50 @@ public class BookSv {
     }
 
     //책 대여
-    public boolean lendBook(Member member, int bookId) {
-        Optional<Book> data = bookList.stream().filter(b -> b.getBookId() == bookId).findFirst();
-        Book book = data.get();
+    public void lendBook(Member member, int bookId) throws LendBookException
+    {
+        Book book = checkLendBookCore (member, bookId);
+
+        member.addBook(book);
+        book.setRental(true);
+    }
+
+    public boolean checkLendBook (Member member, int bookId)
+    {
+        try
+        {
+            checkLendBookCore (member, bookId);
+
+            return true;
+        }
+        catch (LendBookException e)
+        {
+            return false;
+        }
+    }
+
+    /**
+     * 책을 대여할수 있는지 체크를 한다.
+     * @param member
+     * @param bookId
+     * @return
+     * @throws LendBookException
+     */
+    private Book checkLendBookCore (Member member, int bookId) throws LendBookException
+    {
+        Book book = bookList.stream().filter(b -> b.getBookId() == bookId).findFirst()
+            .orElseThrow (() -> new LendBookException (LendBookException.LendBookExceptionType.NO_BOOK));
 
         /**
          * 각 실패 원인을 타입별로 나눠서 반환하도록 수정
          */
-        if(member == null || !data.isPresent() || book.isRental()) {
-            return false;
-        }
+        if(member == null)
+            throw new LendBookException (LendBookException.LendBookExceptionType.NO_MEMBER);
 
-        if( member.addBook(book) ) {
-            book.setRental(true);
-        } else {
-            return false;
-        }
+        if (book.isRental ())
+            throw new LendBookException (LendBookException.LendBookExceptionType.IS_RENTAL);
 
-        return true;
-
+        return book;
     }
 
     //책 반납

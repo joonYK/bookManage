@@ -1,18 +1,22 @@
 package kr.jy.book.controller;
 
-import kr.jy.book.dto.Member;
-import kr.jy.book.service.MemberSv;
-
 import java.util.List;
 import java.util.Scanner;
+
+import kr.jy.book.dto.Member;
+import kr.jy.book.service.MemberSv;
 
 public class MemberCt {
     private MemberSv memberSv;
     private Scanner input = new Scanner(System.in);
 
-    // 회원관리
-    public void manage(MemberSv memberSv) {
+    public MemberCt (MemberSv memberSv)
+    {
         this.memberSv = memberSv;
+    }
+
+    // 회원관리
+    public void manage() {
         int actionType = 0;
 
         while(true) {

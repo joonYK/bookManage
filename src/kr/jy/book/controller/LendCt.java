@@ -1,11 +1,12 @@
 package kr.jy.book.controller;
 
-import kr.jy.book.dto.Member;
-import kr.jy.book.service.BookSv;
-import kr.jy.book.service.MemberSv;
-
 import java.util.Optional;
 import java.util.Scanner;
+
+import kr.jy.book.dto.Member;
+import kr.jy.book.exception.LendBookException;
+import kr.jy.book.service.BookSv;
+import kr.jy.book.service.MemberSv;
 
 public class LendCt {
 
@@ -51,10 +52,28 @@ public class LendCt {
         int bookId = input.nextInt();
         input.nextLine();
 
-        if( bookSv.lendBook(data.get(), bookId) ) {
+
+        try
+        {
+            if (!bookSv.checkLendBook (data.get(), bookId))
+            {
+                // 대여할수 없는 상태
+            }
+
+            bookSv.lendBook(data.get(), bookId);
+
             System.out.println("대여 완료 되었습니다.");
-        } else {
-            System.out.println("대여할 수 없습니다.");
+        }
+        catch (LendBookException e)
+        {
+            if (e.getExceptionType () == LendBookException.LendBookExceptionType.IS_RENTAL)
+                System.out.println("이미 대여중입니다.");
+            else if (e.getExceptionType () == LendBookException.LendBookExceptionType.NO_BOOK)
+                System.out.println("존재 하지 않는 책입니다.");
+            else if (e.getExceptionType () == LendBookException.LendBookExceptionType.NO_MEMBER)
+                System.out.println("존재 하지 않는 회원입니다.");
+            else
+                System.out.println("대여할 수 없습니다.");
         }
     }
 
