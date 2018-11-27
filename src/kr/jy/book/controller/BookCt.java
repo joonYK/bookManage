@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BookCt {
-    private BookSv bookSv;
+    private BookSv bookSv = BookSv.getInstance();
     private Scanner input = new Scanner(System.in);
 
     // 도서관리
-    public void manage(BookSv bookSv) {
-        this.bookSv = bookSv;
+    public void manage() {
         int actionType = 0;
 
         while(true) {

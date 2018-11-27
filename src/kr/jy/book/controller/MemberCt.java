@@ -1,26 +1,21 @@
 package kr.jy.book.controller;
 
-import java.util.List;
-import java.util.Scanner;
-
 import kr.jy.book.dto.Member;
 import kr.jy.book.service.MemberSv;
 
-public class MemberCt {
-    private MemberSv memberSv;
-    private Scanner input = new Scanner(System.in);
+import java.util.List;
+import java.util.Scanner;
 
-    public MemberCt (MemberSv memberSv)
-    {
-        this.memberSv = memberSv;
-    }
+public class MemberCt {
+    private MemberSv memberSv = MemberSv.getInstance();
+    private Scanner input = new Scanner(System.in);
 
     // 회원관리
     public void manage() {
         int actionType = 0;
 
         while(true) {
-            System.out.print("\n[1]:회원 검색  [2]:회원 등록  [3]:회원 삭제 [9]:뒤로가기\n>> ");
+            System.out.print("\n[1]:회원 검색  [2]:회원 등록  [3]:회원 삭제  [9]:뒤로가기\n>> ");
             actionType = input.nextInt();
             input.nextLine();
 

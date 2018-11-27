@@ -10,9 +10,15 @@ import java.util.stream.Collectors;
 
 public class MemberSv {
 
+    private static MemberSv instance;
     private LinkedList<Member> memberList = new LinkedList<> ();
 
-    public MemberSv() {
+    public static MemberSv getInstance() {
+        if(instance == null) instance = new MemberSv();
+        return instance;
+    }
+
+    private MemberSv() {
         memberList.add(new Member("준엽"));
     }
 

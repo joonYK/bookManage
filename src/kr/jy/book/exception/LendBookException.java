@@ -8,6 +8,8 @@ public class LendBookException extends Exception
 
 		IS_RENTAL,
 
+		IS_RENTAL_NO,
+
 		NO_MEMBER,
 	}
 

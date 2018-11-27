@@ -11,9 +11,15 @@ import kr.jy.book.exception.LendBookException;
 
 public class BookSv {
 
+    private static BookSv instance;
     private ArrayList<Book> bookList = new ArrayList<> ();
 
-    public BookSv() {
+    public static BookSv getInstance() {
+        if(instance == null) instance = new BookSv();
+        return instance;
+    }
+
+    private BookSv() {
         bookList.add(new Book("자바"));
         bookList.add(new Book("자바스크립트"));
     }
@@ -46,73 +52,8 @@ public class BookSv {
         return searchBookList;
     }
 
-    //책 대여
-    public void lendBook(Member member, int bookId) throws LendBookException
-    {
-        Book book = checkLendBookCore (member, bookId);
-
-        member.addBook(book);
-        book.setRental(true);
-    }
-
-    public boolean checkLendBook (Member member, int bookId)
-    {
-        try
-        {
-            checkLendBookCore (member, bookId);
-
-            return true;
-        }
-        catch (LendBookException e)
-        {
-            return false;
-        }
-    }
-
-    /**
-     * 책을 대여할수 있는지 체크를 한다.
-     * @param member
-     * @param bookId
-     * @return
-     * @throws LendBookException
-     */
-    private Book checkLendBookCore (Member member, int bookId) throws LendBookException
-    {
-        Book book = bookList.stream().filter(b -> b.getBookId() == bookId).findFirst()
-            .orElseThrow (() -> new LendBookException (LendBookException.LendBookExceptionType.NO_BOOK));
-
-        /**
-         * 각 실패 원인을 타입별로 나눠서 반환하도록 수정
-         */
-        if(member == null)
-            throw new LendBookException (LendBookException.LendBookExceptionType.NO_MEMBER);
-
-        if (book.isRental ())
-            throw new LendBookException (LendBookException.LendBookExceptionType.IS_RENTAL);
-
-        return book;
-    }
-
-    //책 반납
-    public boolean getBackBook(Member member, int bookId) {
-        Optional<Book> data = bookList.stream().filter(b -> b.getBookId() == bookId).findFirst();
-        Book book = data.get();
-
-        /**
-         * 각 실패 원인을 타입별로 나눠서 반환하도록 수정
-         */
-        if(member == null || !data.isPresent() || !book.isRental()) {
-            return false;
-        }
-
-        if( member.removeBook(book) ) {
-            book.setRental(false);
-        } else {
-            return false;
-        }
-
-        return true;
-
+    public Optional<Book> searchBook(int bookId) {
+        return bookList.stream().filter(book -> book.getBookId() == bookId).findFirst();
     }
 
 }
