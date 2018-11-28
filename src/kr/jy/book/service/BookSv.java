@@ -1,13 +1,11 @@
 package kr.jy.book.service;
 
+import kr.jy.book.dto.Book;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import kr.jy.book.dto.Book;
-import kr.jy.book.dto.Member;
-import kr.jy.book.exception.LendBookException;
 
 public class BookSv {
 
