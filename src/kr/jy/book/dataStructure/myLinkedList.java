@@ -4,11 +4,14 @@ public class myLinkedList<T> {
     private Node<T> firstNode;
     private Node<T> lastNode;
 
+    private int size = 0;
+
     // 노드 추가
     public void add(T item) {
         Node<T> node = new Node<T>(item);
 
-        if(firstNode == null) firstNode = node;
+        if(firstNode == null)
+            firstNode = node;
 
         if(lastNode == null) {
             lastNode = node;
@@ -18,14 +21,18 @@ public class myLinkedList<T> {
         }
     }
 
-
     // 노드 조회
     public T get(int i) {
-        return null;
-    }
+        if(i > size) {
+            return null;
+        }
 
-    public T get(T item) {
-        return null;
+        Node<T> node = firstNode;
+        for(int j = 0; j < i; j++) {
+            node = node.nextNode;
+        }
+
+        return node.item;
     }
 
 }
