@@ -37,7 +37,7 @@ public class myLinkedList<E>{
             return null;
 
         Node<E> node = firstNode;
-        for(int i = 0; i < i; i++) {
+        for(int i = 0; i < index; i++) {
             node = node.nextNode;
         }
 
