@@ -195,34 +195,50 @@ public class MyLinkedList<E> implements List<E> {
         if(index > size)
             index = size;
 
-        Node<E> first = null;
-        Node<E> last = null;
+        Node<E> addFirst = null;
+        Node<E> addLast = null;
 
         for(Object o : arr) {
             Node<E> node = new Node<E>((E)o);
-            if(first == null) {
-                first = node;
-                last = node;
+            if(addFirst == null) {
+                addFirst = node;
+                addLast = node;
                 continue;
             }
 
-            last.nextNode = node;
-            node.prevNode = last;
-            last = node;
+            addLast.nextNode = node;
+            node.prevNode = addLast;
+            addLast = node;
         }
 
         Node<E> node = firstNode;
-        if(index == size) {
-            node = lastNode;
+
+        //firstNode가 없는경우 (하나도 없는경우)
+        if(node == null) {
+            firstNode = addFirst;
+            lastNode = addLast;
+            return true;
+
+        //첫번째에 넣는경우
+        } else if(index == 0) {
+            firstNode = addFirst;
+            addLast.nextNode = node;
+            node.prevNode = addLast;
+            return true;
+
+        //마지막에 넣는경우
+        } else if(index == size) {
+            lastNode.nextNode = addFirst;
+            lastNode = addLast;
+
+        //중간에 넣는경우
         } else {
             for(int i=0; i<index; i++) {
                 node = node.nextNode;
             }
+            node.prevNode.nextNode = addFirst;
+            node.prevNode = addLast;
         }
-
-        node.nextNode = first;
-        first.prevNode = node;
-        last.nextNode = node.nextNode;
 
         size += arr.length;
 
@@ -335,18 +351,18 @@ public class MyLinkedList<E> implements List<E> {
     }
 
     public static void main(String[] args) {
-        MyLinkedList<String> mll = new MyLinkedList<String>();
-        mll.add("a");
-        mll.add("b");
-        mll.add("c");
-        mll.add("d");
+            MyLinkedList<String> mll = new MyLinkedList<String>();
+            mll.add("a");
+            mll.add("b");
+            mll.add("c");
+            mll.add("d");
 
-        LinkedList<String> ll = new LinkedList<String>();
-        ll.add("e");
-        ll.add("f");
-        ll.add("g");
+            LinkedList<String> ll = new LinkedList<String>();
+            ll.add("e");
+            ll.add("f");
+            ll.add("g");
 
-        mll.addAll(ll);
+            mll.addAll(ll);
 
         System.out.println(mll);
 
