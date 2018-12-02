@@ -84,9 +84,7 @@ public class MyLinkedList<E> implements List<E> {
         if(size == 0)
             return false;
 
-        Node<E> node = firstNode;
-
-        for(int i = 0; i < size; i++) {
+        for(Node<E> node = firstNode; node != null; node = node.nextNode) {
             if(node.item == o || node.item.equals(o)) {
                 node.prevNode.nextNode = node.nextNode;
                 node.nextNode.prevNode = node.prevNode;
@@ -96,7 +94,6 @@ public class MyLinkedList<E> implements List<E> {
                 size--;
                 return true;
             }
-            node = node.nextNode;
         }
 
         return false;
@@ -121,7 +118,6 @@ public class MyLinkedList<E> implements List<E> {
         node.nextNode.prevNode = node.prevNode;
         node.prevNode = null;
         node.nextNode = null;
-
         size--;
 
         return node.item;
@@ -141,6 +137,15 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public void clear() {
+        Node<E> next = null;
+        for(Node<E> node = firstNode; node != null; ) {
+            next = node.nextNode;
+            node.item = null;
+            node.prevNode = null;
+            node.nextNode = null;
+            node = next;
+        }
+
         firstNode = null;
         lastNode = null;
         size = 0;
@@ -149,6 +154,9 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
+        if(indexOf(o) > -1)
+            return true;
+
         return false;
     }
 
@@ -174,12 +182,51 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        addAll(size, c);
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
+        Object[] arr = c.toArray();
+        if(arr.length == 0)
+            return false;
+
+        if(index > size)
+            index = size;
+
+        Node<E> first = null;
+        Node<E> last = null;
+
+        for(Object o : arr) {
+            Node<E> node = new Node<E>((E)o);
+            if(first == null) {
+                first = node;
+                last = node;
+                continue;
+            }
+
+            last.nextNode = node;
+            node.prevNode = last;
+            last = node;
+        }
+
+        Node<E> node = firstNode;
+        if(index == size) {
+            node = lastNode;
+        } else {
+            for(int i=0; i<index; i++) {
+                node = node.nextNode;
+            }
+        }
+
+        node.nextNode = first;
+        first.prevNode = node;
+        last.nextNode = node.nextNode;
+
+        size += arr.length;
+
+        return true;
     }
 
     @Override
@@ -201,7 +248,18 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        if(size == 0)
+            return -1;
+
+        Node<E> node = firstNode;
+        for(int i = 0; i < size; i++) {
+            if(node.item == o || o.equals(node.item))
+                return i;
+
+            node = node.nextNode;
+        }
+
+        return -1;
     }
 
     @Override
@@ -283,16 +341,14 @@ public class MyLinkedList<E> implements List<E> {
         mll.add("c");
         mll.add("d");
 
+        LinkedList<String> ll = new LinkedList<String>();
+        ll.add("e");
+        ll.add("f");
+        ll.add("g");
+
+        mll.addAll(ll);
+
         System.out.println(mll);
-
-        mll.remove(1);
-
-        System.out.println(mll);
-
-        mll.remove("c");
-
-        System.out.println(mll);
-        System.out.println(mll.size());
 
 
     }
