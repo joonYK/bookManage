@@ -86,8 +86,17 @@ public class MyLinkedList<E> implements List<E> {
 
         for(Node<E> node = firstNode; node != null; node = node.nextNode) {
             if(node.item == o || node.item.equals(o)) {
-                node.prevNode.nextNode = node.nextNode;
-                node.nextNode.prevNode = node.prevNode;
+
+                if(node.prevNode == null)
+                    firstNode = node.nextNode;
+                else
+                    node.prevNode.nextNode = node.nextNode;
+
+                if(node.nextNode == null)
+                    lastNode = node.prevNode;
+                else
+                    node.nextNode.prevNode = node.prevNode;
+
                 node.prevNode = null;
                 node.nextNode = null;
 
@@ -167,7 +176,18 @@ public class MyLinkedList<E> implements List<E> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        if(size == 0)
+            return new Object[0];
+
+        Object[] arr = new Object[size];
+        Node<E> node = firstNode;
+
+        for(int i=0; i<size; i++) {
+            arr[i] = node.item;
+            node = node.nextNode;
+        }
+
+        return arr;
     }
 
     @Override

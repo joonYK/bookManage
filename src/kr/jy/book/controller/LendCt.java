@@ -46,8 +46,14 @@ public class LendCt {
     //도서 대여
     private void borrowBook() {
         System.out.print("\n대여받을 회원 ID, 대여할 책 ID를 입력하세요 ex)1,1\n>> ");
-        Optional<Member> memberData = memberSv.searchMember(input.nextInt());
-        if(!memberData.isPresent()) {
+        Member memberData = memberSv.searchMember(input.nextInt());
+        //Optional<Member> memberData = memberSv.searchMember(input.nextInt());
+        /*if(!memberData.isPresent()) {
+            System.out.println("회원이 존재하지 않습니다.");
+            return;
+        }*/
+
+        if(memberData == null) {
             System.out.println("회원이 존재하지 않습니다.");
             return;
         }
@@ -60,7 +66,7 @@ public class LendCt {
         }
 
         try {
-            lendSv.lendBook(memberData.get(), bookData.get());
+            lendSv.lendBook(memberData, bookData.get());
             System.out.println("대여 완료 되었습니다.");
         }
         catch (LendBookException e) {
@@ -71,11 +77,16 @@ public class LendCt {
     //도서 반납
     private void getBackBook() {
         System.out.print("\n반납할 회원 ID를 입력하세요\n>> ");
-        Optional<Member> memberData = memberSv.searchMember(input.nextInt());
-        if(!memberData.isPresent()) {
+        Member memberData = memberSv.searchMember(input.nextInt());
+        if(memberData == null) {
             System.out.println("회원이 존재하지 않습니다.");
             return;
         }
+        /*Optional<Member> memberData = memberSv.searchMember(input.nextInt());
+        if(!memberData.isPresent()) {
+            System.out.println("회원이 존재하지 않습니다.");
+            return;
+        }*/
 
         System.out.print("\n반납할 책 ID를 입력하세요\n>> ");
         Optional<Book> bookData = bookSv.searchBook(input.nextInt());
@@ -85,7 +96,7 @@ public class LendCt {
         }
 
         try {
-            lendSv.getBackBook(memberData.get(), bookData.get());
+            lendSv.getBackBook(memberData, bookData.get());
             System.out.println("반납 완료 되었습니다.");
 
         } catch(LendBookException e) {
