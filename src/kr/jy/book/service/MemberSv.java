@@ -9,7 +9,7 @@ import java.util.List;
 public class MemberSv {
 
     private static MemberSv instance;
-    private List<Member> memberList = new MyLinkedList<Member>();
+    private MyLinkedList<Member> memberList = new MyLinkedList<Member>();
 
     public static MemberSv getInstance() {
         if(instance == null) instance = new MemberSv();
@@ -24,16 +24,10 @@ public class MemberSv {
     public List<Member> searchMember(String memberName) {
         List<Member> searchMemberList = new ArrayList<Member>();
 
-        if(memberName == null || memberName.equals("")) {
-            searchMemberList.addAll(memberList);
-        } else {
-            for(int i=0; i<memberList.size(); i++) {
-                if(memberList.get(i).getName().contains(memberName)) {
-                    searchMemberList.add(memberList.get(i));
-                }
+        for(int i=0; i<memberList.size(); i++) {
+            if(memberName == null || memberName.equals("") || memberList.get(i).getName().contains(memberName)) {
+                searchMemberList.add(memberList.get(i));
             }
-
-//            searchMemberList = memberList.stream().filter ( member -> member.getName().contains(memberName) ).collect(Collectors.toList());
         }
 
         return searchMemberList;

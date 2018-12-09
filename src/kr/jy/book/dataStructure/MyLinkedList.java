@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-public class MyLinkedList<E> implements List<E> {
+public class MyLinkedList<E> {
     private Node<E> firstNode;
     private Node<E> lastNode;
 
@@ -36,8 +36,6 @@ public class MyLinkedList<E> implements List<E> {
     }
 
 
-
-    @Override
     public void add(int index, E element) {
         if(index < size) {
             return;
@@ -133,18 +131,14 @@ public class MyLinkedList<E> implements List<E> {
 
     }
 
-
-    @Override
     public int size() {
         return size;
     }
 
-    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override
     public void clear() {
         Node<E> next = null;
         for(Node<E> node = firstNode; node != null; ) {
@@ -161,7 +155,6 @@ public class MyLinkedList<E> implements List<E> {
     }
 
 
-    @Override
     public boolean contains(Object o) {
         if(indexOf(o) > -1)
             return true;
@@ -169,12 +162,6 @@ public class MyLinkedList<E> implements List<E> {
         return false;
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        return null;
-    }
-
-    @Override
     public Object[] toArray() {
         if(size == 0)
             return new Object[0];
@@ -190,23 +177,11 @@ public class MyLinkedList<E> implements List<E> {
         return arr;
     }
 
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
     public boolean addAll(Collection<? extends E> c) {
         addAll(size, c);
         return true;
     }
 
-    @Override
     public boolean addAll(int index, Collection<? extends E> c) {
         Object[] arr = c.toArray();
         if(arr.length == 0)
@@ -265,24 +240,6 @@ public class MyLinkedList<E> implements List<E> {
         return true;
     }
 
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-
-    @Override
-    public E set(int index, E element) {
-        return null;
-    }
-
-
-    @Override
     public int indexOf(Object o) {
         if(size == 0)
             return -1;
@@ -296,61 +253,6 @@ public class MyLinkedList<E> implements List<E> {
         }
 
         return -1;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<E> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<E> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        return null;
-    }
-
-    @Override
-    public void replaceAll(UnaryOperator<E> operator) {
-
-    }
-
-    @Override
-    public void sort(Comparator<? super E> c) {
-
-    }
-
-    @Override
-    public Spliterator<E> spliterator() {
-        return null;
-    }
-
-    @Override
-    public boolean removeIf(Predicate<? super E> filter) {
-        return false;
-    }
-
-    @Override
-    public Stream<E> stream() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> parallelStream() {
-        return null;
-    }
-
-    @Override
-    public void forEach(Consumer<? super E> action) {
-
     }
 
     public String toString() {

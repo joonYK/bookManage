@@ -18,8 +18,8 @@ public class BookSv {
     }
 
     private BookSv() {
-        bookList.add(new Book("자바"));
-        bookList.add(new Book("자바스크립트"));
+        bookList.add(new Book("자바", 25000, "김준엽"));
+        bookList.add(new Book("자바스크립트", 30000, "김준엽"));
     }
 
     //책 추가

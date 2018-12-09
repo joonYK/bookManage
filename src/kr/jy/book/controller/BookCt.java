@@ -32,7 +32,6 @@ public class BookCt {
                 break;
             }
         }
-
     }
 
     // 도서검색
@@ -44,16 +43,23 @@ public class BookCt {
             System.out.println("검색된 책이 없습니다.");
         } else {
             for(Book book : searchList) {
-                System.out.printf("ID:%d, 제목:%s, 대여상태:%s\n", book.getBookId(), book.getName(), book.isRental()?"O":"X");
+                System.out.printf("ID:%d, 제목:%s, 가격:%d, 저자:%s, 대여상태:%s\n", book.getBookId(), book.getName(), book.getPrice(), book.getWriter(), book.isRental()?"O":"X");
             }
         }
     }
 
     // 도서등록
     private void addBook() {
-        System.out.print("\n등록할 책 제목을 입력하세요\n>> ");
+        System.out.print("\n등록할 책 제목을 입력하세요.\n>> ");
+        String bookName = input.nextLine();
 
-        if( bookSv.addBook(new Book(input.nextLine())) ) {
+        System.out.print("\n등록할 책 가격을 입력하세요.\n>> ");
+        int price  = Integer.parseInt(input.nextLine());
+
+        System.out.print("\n등록할 책 저자를 입력하세요.\n>> ");
+        String writer = input.nextLine();
+
+        if( bookSv.addBook(new Book(bookName, price, writer)) ) {
             System.out.println("책이 등록되었습니다.");
         } else {
             System.out.println("이미 등록된 책입니다.");
