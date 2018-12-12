@@ -51,9 +51,16 @@ public class MemberCt {
 
     // 회원등록
     private void addmember() {
-        System.out.print("\n등록할 회원 이름을 입력하세요\n>> ");
+        System.out.print("\n등록할 회원의 이름을 입력하세요\n>> ");
+        String name = input.nextLine();
 
-        if( memberSv.addMember(new Member(input.nextLine())) ) {
+        System.out.println("\n등록할 회원의 주소를 입력하세요\n>> ");
+        String addr = input.nextLine();
+
+        System.out.println("\n등록할 회원의 전화번호를 입력하세요\n>> ");
+        String mobile = input.nextLine();
+
+        if( memberSv.addMember(new Member(name, addr, mobile)) ) {
             System.out.println("회원이 등록되었습니다.");
         } else {
             System.out.println("이미 등록된 회원입니다.");

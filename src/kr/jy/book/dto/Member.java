@@ -5,11 +5,15 @@ import java.util.LinkedList;
 public class Member {
     private int memberId;   // 회원 ID
     private String name;    // 이름
+    private String addr;    // 주소
+    private String mobile;  // 전화번호
     private LinkedList<Book> bookList = new LinkedList<Book>(); //빌린 책 리스트
 
-    public Member(String name) {
+    public Member(String name, String addr, String mobile) {
         this.memberId = (int)(Math.random() * 10000) + 1;
         this.name = name;
+        this.addr = addr;
+        this.mobile = mobile;
     }
 
     //책을 빌린다
@@ -28,6 +32,14 @@ public class Member {
 
     public String getName() {
         return name;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public String getMobile() {
+        return mobile;
     }
 
     public String bookListToString() {
