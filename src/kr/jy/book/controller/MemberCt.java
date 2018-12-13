@@ -1,6 +1,7 @@
 package kr.jy.book.controller;
 
 import kr.jy.book.dto.Member;
+import kr.jy.book.file.FileManage;
 import kr.jy.book.service.MemberSv;
 
 import java.util.List;

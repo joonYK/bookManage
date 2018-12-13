@@ -2,14 +2,16 @@ package kr.jy.book.service;
 
 import kr.jy.book.dataStructure.MyLinkedList;
 import kr.jy.book.dto.Member;
+import kr.jy.book.file.FileManage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MemberSv {
-
     private static MemberSv instance;
     private MyLinkedList<Member> memberList = new MyLinkedList<Member>();
+    private FileManage fileManage;
 
     public static MemberSv getInstance() {
         if(instance == null) instance = new MemberSv();
@@ -17,7 +19,23 @@ public class MemberSv {
     }
 
     private MemberSv() {
-        memberList.add(new Member("준엽"));
+        initData();
+    }
+
+    //데이터 초기화
+    private void initData() {
+        fileManage = new FileManage("member.txt");
+        try {
+            fileManage.connectFile();
+            List<String> list = fileManage.readFile();
+            for(String d : list) {
+                String[] arr = d.split(",");
+                memberList.add(new Member(arr[0].trim(), arr[1].trim(), arr[2].trim()));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //회원 리스트
@@ -33,11 +51,6 @@ public class MemberSv {
         return searchMemberList;
     }
 
-    /*//회원 검색
-    public Optional<Member> searchMember(int memberId) {
-        return memberList.stream().filter(m -> m.getMemberId() == memberId).findFirst();
-    }*/
-
     //회원 검색
     public Member searchMember(int memberId) {
         for(int i=0; i<memberList.size(); i++) {
@@ -46,7 +59,6 @@ public class MemberSv {
         }
 
         return null;
-        //return memberList.stream().filter(m -> m.getMemberId() == memberId).findFirst();
     }
 
     //회원 등록
@@ -55,10 +67,6 @@ public class MemberSv {
            if(memberList.get(i).getMemberId() == addMember.getMemberId())
                return false;
        }
-
-       /*if( memberList.stream().anyMatch(member -> member.getMemberId() == addMember.getMemberId()) ) {
-            return false;
-       }*/
 
        memberList.add(addMember);
        return true;
@@ -74,7 +82,6 @@ public class MemberSv {
         }
 
         return false;
-//        return memberList.removeIf(member -> member.getMemberId() == memberId);
     }
 
 

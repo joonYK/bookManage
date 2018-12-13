@@ -1,7 +1,9 @@
 package kr.jy.book.service;
 
 import kr.jy.book.dto.Book;
+import kr.jy.book.file.FileManage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +13,7 @@ public class BookSv {
 
     private static BookSv instance;
     private ArrayList<Book> bookList = new ArrayList<> ();
+    private FileManage fileManage;
 
     public static BookSv getInstance() {
         if(instance == null) instance = new BookSv();
@@ -18,9 +21,25 @@ public class BookSv {
     }
 
     private BookSv() {
-        bookList.add(new Book("자바", 25000, "김준엽"));
-        bookList.add(new Book("자바스크립트", 30000, "김준엽"));
+        initData();
     }
+
+    //데이터 초기화
+    private void initData() {
+        fileManage = new FileManage("book.txt");
+        try {
+            fileManage.connectFile();
+            List<String> list = fileManage.readFile();
+            for(String d : list) {
+                String[] arr = d.split(",");
+                bookList.add(new Book(arr[0].trim(), Integer.parseInt(arr[1]), arr[2].trim()));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //책 추가
     public boolean addBook(Book addBook) {
