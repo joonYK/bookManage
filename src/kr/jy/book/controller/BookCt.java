@@ -53,13 +53,13 @@ public class BookCt {
         System.out.print("\n등록할 책 제목을 입력하세요.\n>> ");
         String bookName = input.nextLine();
 
-        System.out.print("\n등록할 책 가격을 입력하세요.\n>> ");
-        int price  = Integer.parseInt(input.nextLine());
-
         System.out.print("\n등록할 책 저자를 입력하세요.\n>> ");
         String writer = input.nextLine();
 
-        if( bookSv.addBook(new Book(bookName, price, writer)) ) {
+        System.out.print("\n등록할 책 가격을 입력하세요.\n>> ");
+        int price  = Integer.parseInt(input.nextLine());
+
+        if( bookSv.addBook(new Book(bookName, writer, price)) ) {
             System.out.println("책이 등록되었습니다.");
         } else {
             System.out.println("이미 등록된 책입니다.");

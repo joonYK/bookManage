@@ -27,17 +27,13 @@ public class BookSv {
     //데이터 초기화
     private void initData() {
         fileManage = new FileManage("book.txt");
-        try {
-            fileManage.connectFile();
-            List<String> list = fileManage.readFile();
-            for(String d : list) {
-                String[] arr = d.split(",");
-                bookList.add(new Book(arr[0].trim(), Integer.parseInt(arr[1]), arr[2].trim()));
-            }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<String> list = fileManage.readFile();
+        for(String d : list) {
+            String[] arr = d.split(",");
+            bookList.add(new Book(arr[0].trim(), arr[1].trim(), Integer.parseInt(arr[2].trim())));
         }
+
     }
 
 
@@ -71,6 +67,10 @@ public class BookSv {
 
     public Optional<Book> searchBook(int bookId) {
         return bookList.stream().filter(book -> book.getBookId() == bookId).findFirst();
+    }
+
+    public boolean saveBook() {
+        return fileManage.writeFile(bookList.toArray());
     }
 
 }

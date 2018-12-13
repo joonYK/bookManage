@@ -15,29 +15,21 @@ public class FileManage {
     }
 
     /**
-     * 파일 연결 (writer, reader 생성)
-     * @throws IOException
-     */
-    public void connectFile() throws IOException {
-        if(!file.exists()) {
-            file.createNewFile();
-        }
-
-        br = new BufferedReader(new FileReader(file));
-        bw = new BufferedWriter(new FileWriter(file, true));
-    }
-
-    /**
      * 파일 내용 읽기
      * @return
      */
     public List readFile() {
         dataList = new ArrayList<String>();
         String data = "";
+
         try {
+            br = new BufferedReader(new FileReader(file));
+
             while ((data = br.readLine()) != null) {
                 dataList.add(data);
             }
+
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList();
@@ -51,11 +43,16 @@ public class FileManage {
      * @param data
      * @return
      */
-    public boolean writeFile(String data) {
+    public boolean writeFile(Object[] data) {
         try {
-            bw.newLine();
-            bw.write(data);
-            bw.flush();
+            bw = new BufferedWriter(new FileWriter(file));
+
+            for(Object o : data) {
+                bw.write(o.toString());
+                bw.newLine();
+            }
+
+            bw.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -64,34 +61,5 @@ public class FileManage {
         return true;
     }
 
-    /**
-     * 파일 닫기
-     * @throws IOException
-     */
-    public void closeFile() throws IOException {
-        if(file == null) {
-            return;
-        }
 
-        br.close();
-        bw.close();
-    }
-
-    public static void main(String[] args) {
-        FileManage fileManage = new FileManage(FileManage.class.getResource("").getPath() + "../resources/member.txt");
-        List<String> list = null;
-        try {
-            fileManage.connectFile();
-            fileManage.writeFile("김김김, 울산시, 01023141534");
-
-            list = fileManage.readFile();
-            for(String d : list) {
-                System.out.println(d);
-            }
-
-            fileManage.closeFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

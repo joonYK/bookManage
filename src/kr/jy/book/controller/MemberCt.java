@@ -45,7 +45,7 @@ public class MemberCt {
             System.out.println("검색된 회원이 없습니다.");
         } else {
             for(Member member : searchList) {
-                System.out.printf("ID:%d, 이름:%s, 대여리스트:%s\n", member.getMemberId(), member.getName(), member.bookListToString());
+                System.out.printf("ID:%d, 이름:%s, 주소:%s, 전화번호:%s, 대여리스트:%s\n", member.getMemberId(), member.getName(), member.getAddr(), member.getMobile(), member.bookListToString());
             }
         }
     }

@@ -3,6 +3,8 @@ package kr.jy.book;
 import kr.jy.book.controller.BookCt;
 import kr.jy.book.controller.LendCt;
 import kr.jy.book.controller.MemberCt;
+import kr.jy.book.service.BookSv;
+import kr.jy.book.service.MemberSv;
 
 import java.util.Scanner;
 
@@ -13,6 +15,9 @@ public class Main {
         BookCt bookCt = new BookCt();
         MemberCt memberCt = new MemberCt();
         LendCt lendCt = new LendCt();
+
+        MemberSv memberSv = MemberSv.getInstance();
+        BookSv bookSv = BookSv.getInstance();
 
         Scanner input = new Scanner(System.in);
 
@@ -37,6 +42,14 @@ public class Main {
 
             //종료
             } else if(actionType == 9) {
+                if(!memberSv.saveMember()) {
+                    System.out.println("회원 데이터 저장 실패!");
+                }
+
+                if(!bookSv.saveBook()) {
+                    System.out.println("도서 데이터 저장 실패!");
+                }
+
                 break;
             }
         }

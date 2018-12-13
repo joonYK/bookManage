@@ -8,11 +8,11 @@ public class Book {
     private int price;   //가격
     private boolean isRental;   //대여 상태
 
-    public Book(String name, int price, String writer) {
+    public Book(String name, String writer, int price) {
         this.bookId = (int)(Math.random() * 10000) + 1;
         this.name = name;
-        this.price = price;
         this.writer = writer;
+        this.price = price;
     }
 
     public int getBookId() {
@@ -37,5 +37,9 @@ public class Book {
 
     public int getPrice() {
         return price;
+    }
+
+    public String toString() {
+        return name + ", " + writer + ", " + price;
     }
 }

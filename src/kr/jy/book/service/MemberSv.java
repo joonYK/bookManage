@@ -25,17 +25,13 @@ public class MemberSv {
     //데이터 초기화
     private void initData() {
         fileManage = new FileManage("member.txt");
-        try {
-            fileManage.connectFile();
-            List<String> list = fileManage.readFile();
-            for(String d : list) {
-                String[] arr = d.split(",");
-                memberList.add(new Member(arr[0].trim(), arr[1].trim(), arr[2].trim()));
-            }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<String> list = fileManage.readFile();
+        for(String d : list) {
+            String[] arr = d.split(",");
+            memberList.add(new Member(arr[0].trim(), arr[1].trim(), arr[2].trim()));
         }
+
     }
 
     //회원 리스트
@@ -84,5 +80,8 @@ public class MemberSv {
         return false;
     }
 
+    public boolean saveMember() {
+        return fileManage.writeFile(memberList.toArray());
+    }
 
 }

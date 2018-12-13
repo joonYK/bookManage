@@ -53,6 +53,8 @@ public class Member {
         return books.toString();
     }
 
-
+    public String toString() {
+        return name + ", " + addr + ", " + mobile;
+    }
 
 }
