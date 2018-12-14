@@ -10,7 +10,8 @@ public class Book {
 
     public Book(String name, String writer, int price) {
         this.bookId = (int)(Math.random() * 10000) + 1;
-        this.name = name;
+        this.name = name.replace ("&comma;", ",");
+
         this.writer = writer;
         this.price = price;
     }
@@ -40,6 +41,6 @@ public class Book {
     }
 
     public String toString() {
-        return name + ", " + writer + ", " + price;
+        return name.replaceAll (",", "&comma;") + ", " + writer + ", " + price;
     }
 }
