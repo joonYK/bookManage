@@ -1,6 +1,8 @@
 package kr.jy.book.dto;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
 
     private int bookId;     //책 ID
     private String name;    //책 이름

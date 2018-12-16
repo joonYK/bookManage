@@ -3,6 +3,7 @@ package kr.jy.book.service;
 import kr.jy.book.dataStructure.MyLinkedList;
 import kr.jy.book.dto.Member;
 import kr.jy.book.file.FileManage;
+import kr.jy.book.file.ObjectFileManage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class MemberSv {
     private static MemberSv instance;
     private MyLinkedList<Member> memberList = new MyLinkedList<Member>();
     private FileManage fileManage;
+    private ObjectFileManage objectFileManage;
 
     public static MemberSv getInstance() {
         if(instance == null) instance = new MemberSv();
@@ -24,13 +26,16 @@ public class MemberSv {
 
     //데이터 초기화
     private void initData() {
-        fileManage = new FileManage("member.txt");
+        /*fileManage = new FileManage("member.txt");
 
         List<String> list = fileManage.readFile();
         for(String d : list) {
             String[] arr = d.split(",");
             memberList.add(new Member(arr[0].trim(), arr[1].trim(), arr[2].trim()));
-        }
+        }*/
+
+        objectFileManage = new ObjectFileManage("member.ser");
+        memberList = (MyLinkedList<Member>)objectFileManage.readFile();
 
     }
 
@@ -81,7 +86,8 @@ public class MemberSv {
     }
 
     public boolean saveMember() {
-        return fileManage.writeFile(memberList.toArray());
+        //return fileManage.writeFile(memberList.toArray());
+        return objectFileManage.writeFile(memberList);
     }
 
 }

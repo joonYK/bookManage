@@ -1,12 +1,10 @@
 package kr.jy.book.dataStructure;
 
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedList;
 
-public class MyLinkedList<E> {
+public class MyLinkedList<E> implements Serializable {
     private Node<E> firstNode;
     private Node<E> lastNode;
 
@@ -294,7 +292,7 @@ public class MyLinkedList<E> {
 
 }
 
-class Node<E> {
+class Node<E> implements Serializable{
     E item;
     Node<E> nextNode;
     Node<E> prevNode;

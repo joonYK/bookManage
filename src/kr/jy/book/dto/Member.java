@@ -1,8 +1,9 @@
 package kr.jy.book.dto;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Member {
+public class Member implements Serializable {
     private int memberId;   // 회원 ID
     private String name;    // 이름
     private String addr;    // 주소

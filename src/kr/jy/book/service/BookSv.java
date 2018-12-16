@@ -2,8 +2,8 @@ package kr.jy.book.service;
 
 import kr.jy.book.dto.Book;
 import kr.jy.book.file.FileManage;
+import kr.jy.book.file.ObjectFileManage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +12,9 @@ import java.util.stream.Collectors;
 public class BookSv {
 
     private static BookSv instance;
-    private ArrayList<Book> bookList = new ArrayList<> ();
+    private List<Book> bookList = new ArrayList<> ();
     private FileManage fileManage;
+    private ObjectFileManage objectFileManage;
 
     public static BookSv getInstance() {
         if(instance == null) instance = new BookSv();
@@ -24,18 +25,25 @@ public class BookSv {
         initData();
     }
 
-    //데이터 초기화
+    /**
+     * 데이터 초기화
+     * @param serializable 직렬화 사용여부
+     */
     private void initData() {
-        fileManage = new FileManage("book.txt");
+
+        /*fileManage = new FileManage("book.txt");
 
         List<String> list = fileManage.readFile();
-        for(String d : list) {
+        for (String d : list) {
             String[] arr = d.split(",");
             bookList.add(new Book(arr[0].trim(), arr[1].trim(), Integer.parseInt(arr[2].trim())));
-        }
+        }*/
+
+        objectFileManage = new ObjectFileManage("book.ser");
+        bookList = (List<Book>)objectFileManage.readFile();
+
 
     }
-
 
     //책 추가
     public boolean addBook(Book addBook) {
@@ -70,7 +78,8 @@ public class BookSv {
     }
 
     public boolean saveBook() {
-        return fileManage.writeFile(bookList.toArray());
+        //return fileManage.writeFile(bookList.toArray());
+        return objectFileManage.writeFile(bookList);
     }
 
 }
